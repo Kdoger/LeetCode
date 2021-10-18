@@ -14,37 +14,60 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1, l2) :
-        l3 = ListNode(0, ListNode())  # 定义一个头节点方便操作
+        l3 = ListNode()  # 定义一个头节点方便操作
         p_1 = l1
         p_2 = l2
         p = l3
+        temp = l3
         while p_1 is not None or p_2 is not None:
             if p_1 is not None and p_2 is not None:
                 if p_1.val + p_2.val + p.val < 10:
-                    p.next.val = p_1.val + p_2.val + p.val
-                    p.next.next = ListNode()
+                    p.val = p_1.val + p_2.val + p.val
+                    p.next = ListNode()
                 else:
-                    p.next.val = (p_1.val + p_2.val + p.val) % 10
-                    p.next.next = ListNode(1)
-            p_1 = p_1.next
-            p_2 = p_2.next
-            '''else:
-                 p_1 = ListNode()
-            if p_2.next is not None:
+                    p.val = (p_1.val + p_2.val + p.val) % 10
+                    p.next = ListNode(1)
+                p_1 = p_1.next
                 p_2 = p_2.next
-            else:
-                p_2 = ListNode()
-            p = p.next
-            if p_1 is None and p_2 is None:
-                break'''
+                temp = p
+                p = p.next
 
-        return l3.next
+            if p_1 is None and p_2 is not None:
+                if p_2.val + p.val < 10:
+                    p.val = p_2.val + p.val
+                    p.next = p_2
+                    p_2 = None
+                else:
+                    p.val = (p_2.val + p.val) % 10
+                    p.next = ListNode(1)
+                    p_2 = p_2.next
+                temp = p
+                p = p.next
+
+            if p_1 is not None and p_2 is None:
+                if p_1.val + p.val < 10:
+                    p.val = p_1.val + p.val
+                    p.next = p_1
+                    p_1 = None
+                else:
+                    p.val = (p_1.val + p.val) % 10
+                    p.next = ListNode(1)
+                    p_1 = p_1.next
+                temp = p
+                p = p.next
+
+
+
+        if p.val == 0:
+            temp.next = None
+
+        return l3
     pass
 
 
 '''单链表由嵌套定义实现'''
-l1 = ListNode(2,ListNode(4,ListNode(3)))
-l2 = ListNode(5,ListNode(6,ListNode(4)))
+l1 = ListNode(9,ListNode(9,ListNode(1)))
+l2 = ListNode(1)
 l =[]
 result = Solution()
 p = result.addTwoNumbers(l1, l2)
