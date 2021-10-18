@@ -18,7 +18,6 @@ class Solution:
         p_1 = l1
         p_2 = l2
         p = l3
-        temp = l3
         while p_1 is not None or p_2 is not None:
             if p_1 is not None and p_2 is not None:
                 if p_1.val + p_2.val + p.val < 10:
@@ -29,37 +28,37 @@ class Solution:
                     p.next = ListNode(1)
                 p_1 = p_1.next
                 p_2 = p_2.next
-                temp = p
-                p = p.next
-
-            if p_1 is None and p_2 is not None:
-                if p_2.val + p.val < 10:
-                    p.val = p_2.val + p.val
-                    p.next = p_2
-                    p_2 = None
-                else:
-                    p.val = (p_2.val + p.val) % 10
-                    p.next = ListNode(1)
-                    p_2 = p_2.next
-                temp = p
                 p = p.next
 
             if p_1 is not None and p_2 is None:
                 if p_1.val + p.val < 10:
                     p.val = p_1.val + p.val
-                    p.next = p_1
-                    p_1 = None
+                    p.next = p_1.next
+                    p_1 = p_1.next
+                    break
                 else:
                     p.val = (p_1.val + p.val) % 10
                     p.next = ListNode(1)
                     p_1 = p_1.next
-                temp = p
-                p = p.next
+                    p = p.next
 
+            if p_1 is None and p_2 is not None:
+                if p_2.val + p.val < 10:
+                    p.val = p_2.val + p.val
+                    p.next = p_2.next
+                    p_2 = p_2.next
+                    break
+                else:
+                    p.val = (p_2.val + p.val) % 10
+                    p.next = ListNode(1)
+                    p_2 = p_2.next
+                    p = p.next
 
-
-        if p.val == 0:
-            temp.next = None
+        p = l3
+        while p.next.next is not None:
+            p = p.next
+        if p.next.val == 0:
+            p.next = None
 
         return l3
     pass
