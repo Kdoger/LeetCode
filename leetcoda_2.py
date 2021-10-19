@@ -14,7 +14,7 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1, l2) :
-        l3 = ListNode()  # 定义一个头节点方便操作
+        l3 = ListNode()
         p_1 = l1
         p_2 = l2
         p = l3
