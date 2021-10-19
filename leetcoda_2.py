@@ -2,6 +2,7 @@
 给你两个非空 的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。
 请你将两个数相加，并以相同形式返回一个表示和的链表。
 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/add-two-numbers
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -14,11 +15,13 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1, l2) :
+        # 定义三个指针指向三个链表
         l3 = ListNode()
         p_1 = l1
         p_2 = l2
         p = l3
         while p_1 is not None or p_2 is not None:
+            '''情况一：l1和l2都不是结尾'''
             if p_1 is not None and p_2 is not None:
                 if p_1.val + p_2.val + p.val < 10:
                     p.val = p_1.val + p_2.val + p.val
@@ -26,13 +29,15 @@ class Solution:
                 else:
                     p.val = (p_1.val + p_2.val + p.val) % 10
                     p.next = ListNode(1)
+                '''指针向后移动'''
                 p_1 = p_1.next
                 p_2 = p_2.next
                 p = p.next
-
+            '''l1非空，l2空'''
             if p_1 is not None and p_2 is None:
                 if p_1.val + p.val < 10:
                     p.val = p_1.val + p.val
+                    '''直接将l1连接到l3后面'''
                     p.next = p_1.next
                     p_1 = p_1.next
                     break
@@ -45,6 +50,7 @@ class Solution:
             if p_1 is None and p_2 is not None:
                 if p_2.val + p.val < 10:
                     p.val = p_2.val + p.val
+                    '''直接将l2连接到l3后面'''
                     p.next = p_2.next
                     p_2 = p_2.next
                     break
